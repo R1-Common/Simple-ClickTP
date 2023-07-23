@@ -1,0 +1,70 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Click TP",
+   LoadingTitle = "ClickTP",
+   LoadingSubtitle = "by PJEX",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil,
+      FileName = "DUMBASSMONKEYCLICKTPBIGDADDYCLUB"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink",
+      RememberJoins = true
+   },
+   KeySystem = false,
+   KeySettings = {
+      Title = "Untitled",
+      Subtitle = "Key System",
+      Note = "No method of obtaining the key is provided",
+      FileName = "Key",
+      SaveKey = true,
+      GrabKeyFromSite = false,
+      Key = {"Hello"}
+   }
+})
+
+local MainTab = Window:CreateTab("Main", nil)
+local MainSection = MainTab:CreateSection("Main")
+
+local Toggle = MainTab:CreateToggle({
+   Name = "ClickTP",
+   CurrentValue = false,
+   Flag = "Toggle1", 
+   Callback = function(Value)
+        local StarterGui = game:GetService("StarterGui")
+        local UserInputService = game:GetService("UserInputService")
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local mouse = player:GetMouse()
+        _G.clickTeleportEnabled = Value
+
+        function onButton1Down()
+            if _G.clickTeleportEnabled then
+                local character = player.Character
+                if character and character:FindFirstChild("HumanoidRootPart") then
+                    local rootPart = character.HumanoidRootPart
+                    rootPart.CFrame = CFrame.new(mouse.Hit.p)
+                end
+            end
+        end
+
+        mouse.Button1Down:Connect(onButton1Down)
+
+        if _G.clickTeleportEnabled then
+            StarterGui:SetCore("SendNotification", {
+                Title = "Teleportation";
+                Text = "ClickTP enabled!";
+                Duration = 5;
+            })
+        else
+            StarterGui:SetCore("SendNotification", {
+                Title = "Teleportation";
+                Text = "ClickTP disabled!";
+                Duration = 5;
+            })
+        end
+   end,
+})
